@@ -16,7 +16,7 @@ import com.example.d308vacationsapp.entities.Excursion;
 import java.util.List;
 
 public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.ExcursionViewHolder> {
-    private List<Excursion> mExcursions;
+    private static List<Excursion> mExcursions;
     private final Context context;
     private final LayoutInflater mInflater;
 

@@ -12,11 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.d308vacationsapp.R;
 import com.example.d308vacationsapp.database.Repository;
+import com.example.d308vacationsapp.entities.Excursion;
 import com.example.d308vacationsapp.entities.Vacation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VacationDetails extends AppCompatActivity {
     String name;
@@ -37,8 +43,8 @@ public class VacationDetails extends AppCompatActivity {
         FloatingActionButton fab=findViewById(R.id.floatingActionButton2);
 
         vacationID = getIntent().getIntExtra("id",-1);
-        editName=findViewById(R.id.titletext);
-        editPrice=findViewById(R.id.pricetext);
+        editName=findViewById(R.id.vacationname);
+        editPrice=findViewById(R.id.vacationprice);
 
         name = getIntent().getStringExtra("name");
         price = getIntent().getDoubleExtra("price",0.0);
@@ -47,20 +53,31 @@ public class VacationDetails extends AppCompatActivity {
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent=new Intent(VacationDetails.this, ExcursionDetails.class);
                 intent.putExtra("vacID", vacationID);
                 startActivity(intent);
             }
         });
+        RecyclerView recyclerView = findViewById(R.id.excursionrecyclerview);
+        repository = new Repository(getApplication());
+        final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
+        recyclerView.setAdapter(excursionAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Excursion> filteredExcursions = new ArrayList<>();
+        for (Excursion e : repository.getAllExcursions()) {
+            if (e.getVacationId() == vacationID) filteredExcursions.add(e);
+        }
+        excursionAdapter.setExcursions(filteredExcursions);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
 
+
+    }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_vacationdetails,menu);
         return true;

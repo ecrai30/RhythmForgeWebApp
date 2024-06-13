@@ -39,9 +39,10 @@ private Repository repository;
             }
         });
 
-        RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
+
         repository=new Repository(getApplication());
         List<Vacation> allVacations=repository.getmAllVacations();
+        RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
         final VacationAdapter vacationAdapter = new VacationAdapter(this);
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -70,25 +71,34 @@ private Repository repository;
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()== android.R.id.home){
+            this.finish();
+               //Intent intent=new Intent(ProductDetails.this,MainActivity.class);
+               //startActivity(intent);
+            return true;}
+
         if(item.getItemId()==R.id.sample){
             repository=new Repository(getApplication());
             //Toast.makeText(VacationList.this, "put in sample data", Toast.LENGTH_SHORT).show();
 
-            Vacation vacation = new Vacation(0,"Brazil",2000.0);
+            Vacation vacation = new Vacation(1,"Brazil",2000.0);
             repository.insert(vacation);
-            vacation = new Vacation(0,"Colombia",2000.0);
+            vacation = new Vacation(2,"Colombia",2000.0);
             repository.insert(vacation);
-            Excursion excursion=new Excursion(0,"hiking",100.0,1);
+            List<Vacation> allVacations=repository.getmAllVacations();
+            RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
+            final VacationAdapter vacationAdapter=new VacationAdapter(this);
+            recyclerView.setAdapter(vacationAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            vacationAdapter.setVacations(allVacations);
+
+            /*Excursion excursion=new Excursion(0,"hiking",100.0,1);
             repository.insert(excursion);
             excursion=new Excursion(0,"Cycling",200.0,1);
-            repository.insert(excursion);
+            repository.insert(excursion);*/
             return true;
 
         }
-        if(item.getItemId()==android.R.id.home){
-            this.finish();
-            return true;
-        }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 }

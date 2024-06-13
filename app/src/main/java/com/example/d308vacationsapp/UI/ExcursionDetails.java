@@ -26,11 +26,13 @@ public class ExcursionDetails extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        RecyclerView recyclerView=findViewById(R.id.excursionrecyclerview);
+
+        /*
+        RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
         repository = new Repository(getApplication());
         final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        excursionAdapter.setExcursions(repository.getAllExcursions());
+        excursionAdapter.setExcursions(repository.getAllExcursions()); **/
     }
 }
