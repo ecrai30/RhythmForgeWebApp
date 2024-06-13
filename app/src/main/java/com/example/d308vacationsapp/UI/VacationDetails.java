@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,6 +78,7 @@ public class VacationDetails extends AppCompatActivity {
         });
 
 
+
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_vacationdetails,menu);
@@ -96,6 +98,24 @@ public class VacationDetails extends AppCompatActivity {
                 vacation = new Vacation(vacationID,editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()));
                 repository.update(vacation);
                 this.finish();
+            }
+        }
+        if(item.getItemId()==R.id.vacationdelete) {
+            for (Vacation vac : repository.getmAllVacations()) {
+                if (vac.getVacationId() == vacationID) currentVacation = vac;
+
+            }
+            numExcursions=0;
+            for(Excursion excursion: repository.getAllExcursions()){
+                if(excursion.getVacationId()==vacationID)++numExcursions;
+            }
+            if(numExcursions==0){
+                repository.delete(currentVacation);
+                Toast.makeText(VacationDetails.this,currentVacation.getVacationName() + " was deleted", Toast.LENGTH_LONG).show();
+                VacationDetails.this.finish();
+            }
+            else{
+                Toast.makeText(VacationDetails.this, "Can't delete a vacation with excursions.", Toast.LENGTH_LONG).show();
             }
         }
         return true;

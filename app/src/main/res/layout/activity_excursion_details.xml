@@ -28,7 +28,7 @@
             <EditText
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:id="@+id/partName"/>
+                android:id="@+id/excursionName"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -44,7 +44,7 @@
             <EditText
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:id="@+id/partPrice"/>
+                android:id="@+id/excursionPrice"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
