@@ -85,6 +85,12 @@ public class VacationDetails extends AppCompatActivity {
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem item){
+
+        if(item.getItemId()== android.R.id.home){
+            this.finish();
+            return true;
+        }
+
         if(item.getItemId()==R.id.vacationsave){
             Vacation vacation;
             if(vacationID==-1){
