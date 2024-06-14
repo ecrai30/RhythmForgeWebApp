@@ -60,10 +60,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vacation PriceB" />
+                    android:text="Start Date:" />
 
                 <EditText
-                    android:id="@+id/vacationpriceB"
+                    android:id="@+id/startdate"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -75,10 +75,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vacation Price C" />
+                    android:text="End Date:" />
 
                 <EditText
-                    android:id="@+id/vacationpriceC"
+                    android:id="@+id/enddate"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -90,40 +90,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vacation PriceD" />
+                    android:text="Hotel" />
 
                 <EditText
-                    android:id="@+id/vacationpriced"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vacation PriceE" />
-
-                <EditText
-                    android:id="@+id/vacationpricee"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vacation PriceF" />
-
-                <EditText
-                    android:id="@+id/vacationpricef"
+                    android:id="@+id/hotel"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -148,6 +118,9 @@
         android:id="@+id/excursionrecyclerview"
         android:layout_width="409dp"
         android:layout_height="464dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
