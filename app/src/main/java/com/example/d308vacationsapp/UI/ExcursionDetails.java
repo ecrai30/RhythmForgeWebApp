@@ -166,14 +166,35 @@ public class ExcursionDetails extends AppCompatActivity {
             }
             return true;}
         if (item.getItemId()== R.id.share) {
+            // Share all vacation details via Intent
+            String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
+                                    "Vacation Price: $" + editPrice.getText().toString() + "\n" +
+                                    "Excursion Name: " + editName.getText().toString() + "\n" +
+                                    "Excursion Price: $" + editPrice.getText().toString() + "\n" +
+                                    "Excursion Date: " + editDate.getText().toString() + "\n" +
+                                    "Notes: " + editNote.getText().toString();
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, vacationDetails);
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Vacation Details");
+            sendIntent.setType("text/plain");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+            return true;
+            
+            /*
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, editNote.getText().toString());
             sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
             sendIntent.setType("text/plain");
+            
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
             return true;
+            */
         }
         if(item.getItemId()== R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
