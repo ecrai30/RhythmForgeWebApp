@@ -19,6 +19,17 @@ VacayVibe combines functionality with simplicity, making it an indispensable too
 
 
 •  directions for how to operate the application and reach all the rubric aspects
+Instructions on how to udse VacayVibe:
+Add new vacation:
+1. Open app ( A welcome and get started screen should appear )
+2. Click on Let's Go button( it will direct you to the Vacation List.)
+3. Click on the Add button at the bottom right to add vacation and fill out vacation details.
+4. Click the ellipsis at the top right corner to save vacation. 
+Add new excursion:
+
+Delete existing vacation:
+3. Click on a vacation and it will direct you to the vacation details page (vacation details, manage        excursions)
+4. Click the ellipsis at the top right corner to view menu options(delete vacation)
 
 •  to which android version the signed APK is deployed
 
