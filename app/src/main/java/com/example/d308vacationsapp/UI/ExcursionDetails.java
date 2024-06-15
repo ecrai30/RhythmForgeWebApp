@@ -74,9 +74,6 @@ public class ExcursionDetails extends AppCompatActivity {
         });
 
 
-        //ArrayList<Integer> vacationIdList= new ArrayList<>();
-
-
 
         Spinner spinner=findViewById(R.id.spinner);
         ArrayList<Vacation> vacationArrayList= new ArrayList<>();
@@ -85,11 +82,6 @@ public class ExcursionDetails extends AppCompatActivity {
         spinner.setAdapter(vacationAdapter);
         spinner.setSelection(0);
 
-        /*
-        for(Vacation vacation:vacationArrayList){
-            vacationIdList.add(vacation.getVacationId());
-        }
-        */
         startDate = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -164,7 +156,23 @@ public class ExcursionDetails extends AppCompatActivity {
                 excursion = new Excursion(excursionID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), vacID);
                 repository.update(excursion);
             }
-            return true;}
+
+            return true;
+        }
+        //Delete Excursion
+        if (item.getItemId() == R.id.deleteexcursion) {
+            Excursion excursion;
+            if (excursionID != -1) {
+                // Create a new Excursion object with the ID to delete
+                Excursion excursionToDelete = new Excursion(excursionID, "", 0.0, vacID);
+                repository.delete(excursionToDelete);
+                finish(); // Optionally, navigate back or do any other necessary UI update
+            }
+            return true;
+        }
+
+
+
         if (item.getItemId()== R.id.share) {
             // Share all vacation details via Intent
             String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
