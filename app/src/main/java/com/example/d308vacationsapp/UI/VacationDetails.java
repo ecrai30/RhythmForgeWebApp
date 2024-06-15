@@ -22,8 +22,12 @@ import com.example.d308vacationsapp.entities.Excursion;
 import com.example.d308vacationsapp.entities.Vacation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VacationDetails extends AppCompatActivity {
     String name;
@@ -108,6 +112,25 @@ public class VacationDetails extends AppCompatActivity {
         }
 
         if(item.getItemId()==R.id.vacationsave){
+            String startDateStr = editStartDate.getText().toString().trim();
+            String endDateStr = editEndDate.getText().toString().trim();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.US);
+            Date startDate, endDate;
+            try {
+                startDate = sdf.parse(startDateStr);
+                endDate = sdf.parse(endDateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Toast.makeText(VacationDetails.this, "Error parsing dates", Toast.LENGTH_SHORT).show();
+                return true; // Exit without saving
+            }
+            // Validate that end date is after start date
+            if (endDate.before(startDate)) {
+                Toast.makeText(VacationDetails.this, "End date must be after start date", Toast.LENGTH_SHORT).show();
+                return true; // Exit without saving
+            }
+
             Vacation vacation;
             if(vacationID==-1){
                 if(repository.getmAllVacations().size()==0) vacationID=1;
@@ -115,12 +138,15 @@ public class VacationDetails extends AppCompatActivity {
                 vacation = new Vacation(vacationID,editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()),editHotel.getText().toString(), editStartDate.getText().toString(),editEndDate.getText().toString());
                 repository.insert(vacation);
                 this.finish();
+
+
             }
             else{
                 vacation = new Vacation(vacationID,editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()),editHotel.getText().toString(),editStartDate.getText().toString(),editEndDate.getText().toString());
                 repository.update(vacation);
                 this.finish();
             }
+
         }
         if(item.getItemId()==R.id.vacationdelete) {
             for (Vacation vac : repository.getmAllVacations()) {
