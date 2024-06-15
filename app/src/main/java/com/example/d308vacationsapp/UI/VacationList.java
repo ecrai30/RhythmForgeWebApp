@@ -82,21 +82,23 @@ private Repository repository;
             repository=new Repository(getApplication());
             //Toast.makeText(VacationList.this, "put in sample data", Toast.LENGTH_SHORT).show();
 
-            Vacation vacation = new Vacation(1,"Brazil",2000.0);
+            Vacation vacation = new Vacation(1,"Brazil",2000.0,"Grand Hyatt","6/14/2024","6/16/2024");
             repository.insert(vacation);
-            vacation = new Vacation(2,"Colombia",2000.0);
+            vacation = new Vacation(2,"Colombia",2000.0,"Hotel Torre","6/14/2024","6/16/2024");
             repository.insert(vacation);
+
             List<Vacation> allVacations=repository.getmAllVacations();
             RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
             final VacationAdapter vacationAdapter=new VacationAdapter(this);
             recyclerView.setAdapter(vacationAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             vacationAdapter.setVacations(allVacations);
-
-            /*Excursion excursion=new Excursion(0,"hiking",100.0,1);
+            /*
+            Excursion excursion=new Excursion(0,"hiking",100.0,1);
             repository.insert(excursion);
             excursion=new Excursion(0,"Cycling",200.0,1);
-            repository.insert(excursion);*/
+            repository.insert(excursion); */
+
             return true;
 
         }
