@@ -106,17 +106,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
-        android:layout_width="0dp"
+        android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_margin="10dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="176dp"
         android:clickable="true"
         android:onClick="enterExcursionDetail"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/excursionrecyclerview"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add"
+        tools:layout_editor_absoluteY="664dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/excursionrecyclerview"
