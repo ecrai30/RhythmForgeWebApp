@@ -12,6 +12,7 @@ public class Vacation {
     private String hotel;
     private String startDate;
     private String endDate;
+    private static final String DATE_FORMAT = "MM/dd/yy";
 
 
     public Vacation(int vacationId, String vacationName, double price,String hotel, String startDate, String endDate) {
