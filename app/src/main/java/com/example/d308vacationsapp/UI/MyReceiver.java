@@ -18,6 +18,8 @@ public class MyReceiver extends BroadcastReceiver {
     String channel_id = "test";
     static int notificationID;
 
+    //Uncomment this if it doesn't work!!!
+    /*
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, intent.getStringExtra("key"), Toast.LENGTH_LONG).show();
@@ -29,6 +31,21 @@ public class MyReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID++, n);
     }
+    */
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String message = intent.getStringExtra("key");
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        createNotificationChannel(context, channel_id);
+        Notification n = new NotificationCompat.Builder(context, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentText(message)
+                .setContentTitle("Excursion Reminder")
+                .build();
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationID++, n);
+    }
+
     // TODO: This method is called when the BroadcastReceiver is receiving
     // an Intent broadcast.
 

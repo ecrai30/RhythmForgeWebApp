@@ -47,6 +47,7 @@ public class ExcursionDetails extends AppCompatActivity {
     Repository repository;
     DatePickerDialog.OnDateSetListener startDate;
     final Calendar myCalendarStart = Calendar.getInstance();
+    private static final String DATE_FORMAT = "MM/dd/yy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,7 +205,8 @@ public class ExcursionDetails extends AppCompatActivity {
             return true;
             */
         }
-        if(item.getItemId()== R.id.notify) {
+        // Uncomment this if it doesn't work!!!!
+        /*if(item.getItemId()== R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
             String myFormat = "MM/dd/yy"; //In which you need put here
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -228,7 +230,31 @@ public class ExcursionDetails extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+            */
+           if (item.getItemId() == R.id.notify) {
+            String dateFromScreen = editDate.getText().toString();
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+            Date myDate = null;
+            try {
+                myDate = sdf.parse(dateFromScreen);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (myDate != null) {
+                Long trigger = myDate.getTime();
+                Intent intent = new Intent(ExcursionDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Reminder: " + editName.getText().toString() + " is today!");
+                PendingIntent sender = PendingIntent.getBroadcast(ExcursionDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                if (alarmManager != null) {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                    Toast.makeText(this, "Notification set for " + dateFromScreen, Toast.LENGTH_SHORT).show();
+                }
+            }
+            return true;
+        }
 
+        return super.onOptionsItemSelected(item);
 
         /*
         RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
