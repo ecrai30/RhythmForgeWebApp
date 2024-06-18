@@ -1,11 +1,14 @@
 package com.example.d308vacationsapp.UI;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -34,52 +38,68 @@ public class VacationDetails extends AppCompatActivity {
     double price;
     String hotel;
     int vacationID;
-    String startDate;
-    String endDate;
-
+    TextView startDate;
+    TextView endDate;
     EditText editName;
     EditText editPrice;
     EditText editHotel;
-    EditText editStartDate;
-    EditText editEndDate;
     Repository repository;
     Vacation currentVacation;
     int numExcursions;
+    Calendar myCalendarStart = Calendar.getInstance();
+    Calendar myCalendarEnd = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_vacation_details);
-        FloatingActionButton fab=findViewById(R.id.floatingActionButton2);
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
 
-        vacationID = getIntent().getIntExtra("id",-1);
-        editName=findViewById(R.id.vacationname);
-        editPrice=findViewById(R.id.vacationprice);
-        editHotel=findViewById(R.id.hotel);
-        editStartDate=findViewById(R.id.startdate);
-        editEndDate=findViewById(R.id.enddate);
+        vacationID = getIntent().getIntExtra("id", -1);
+        editName = findViewById(R.id.vacationname);
+        editPrice = findViewById(R.id.vacationprice);
+        editHotel = findViewById(R.id.hotel);
+        startDate = findViewById(R.id.startdate);
+        endDate = findViewById(R.id.enddate);
 
         name = getIntent().getStringExtra("name");
-        price = getIntent().getDoubleExtra("price",0.0);
+        price = getIntent().getDoubleExtra("price", 0.0);
         hotel = getIntent().getStringExtra("hotel");
-        startDate=getIntent().getStringExtra("startDate");
-        endDate=getIntent().getStringExtra("endDate");
+
         editName.setText(name);
         editPrice.setText(Double.toString(price));
-        //edit fields
         editHotel.setText(hotel);
-        editStartDate.setText(startDate);
-        editEndDate.setText(endDate);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.US);
+
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(VacationDetails.this, startDateSetListener, myCalendarStart
+                        .get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
+                        myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(VacationDetails.this, endDateSetListener, myCalendarEnd
+                        .get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
+                        myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(VacationDetails.this, ExcursionDetails.class);
+                Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
                 intent.putExtra("vacID", vacationID);
                 startActivity(intent);
             }
         });
+
         RecyclerView recyclerView = findViewById(R.id.excursionrecyclerview);
         repository = new Repository(getApplication());
         final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
@@ -96,24 +116,57 @@ public class VacationDetails extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
-
     }
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_vacationdetails,menu);
+
+    private final DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendarStart.set(Calendar.YEAR, year);
+            myCalendarStart.set(Calendar.MONTH, monthOfYear);
+            myCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateStartDateLabel();
+        }
+    };
+
+    private final DatePickerDialog.OnDateSetListener endDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendarEnd.set(Calendar.YEAR, year);
+            myCalendarEnd.set(Calendar.MONTH, monthOfYear);
+            myCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateEndDateLabel();
+        }
+    };
+
+    private void updateStartDateLabel() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        startDate.setText(sdf.format(myCalendarStart.getTime()));
+    }
+
+    private void updateEndDateLabel() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        endDate.setText(sdf.format(myCalendarEnd.getTime()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_vacationdetails, menu);
         return true;
     }
-    public boolean onOptionsItemSelected(MenuItem item){
 
-        if(item.getItemId()== android.R.id.home){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
             this.finish();
             return true;
         }
 
-        if(item.getItemId()==R.id.vacationsave){
-            String startDateStr = editStartDate.getText().toString().trim();
-            String endDateStr = editEndDate.getText().toString().trim();
+        if (item.getItemId() == R.id.vacationsave) {
+            String startDateStr = startDate.getText().toString().trim();
+            String endDateStr = endDate.getText().toString().trim();
 
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.US);
             Date startDate, endDate;
@@ -132,37 +185,32 @@ public class VacationDetails extends AppCompatActivity {
             }
 
             Vacation vacation;
-            if(vacationID==-1){
-                if(repository.getmAllVacations().size()==0) vacationID=1;
-                else vacationID = repository.getmAllVacations().get(repository.getmAllVacations().size() -1).getVacationId() +1;
-                vacation = new Vacation(vacationID,editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()),editHotel.getText().toString(), editStartDate.getText().toString(),editEndDate.getText().toString());
+            if (vacationID == -1) {
+                if (repository.getmAllVacations().size() == 0) vacationID = 1;
+                else vacationID = repository.getmAllVacations().get(repository.getmAllVacations().size() - 1).getVacationId() + 1;
+                vacation = new Vacation(vacationID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), editHotel.getText().toString(), startDateStr, endDateStr);
                 repository.insert(vacation);
                 this.finish();
-
-
-            }
-            else{
-                vacation = new Vacation(vacationID,editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()),editHotel.getText().toString(),editStartDate.getText().toString(),editEndDate.getText().toString());
+            } else {
+                vacation = new Vacation(vacationID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), editHotel.getText().toString(), startDateStr, endDateStr);
                 repository.update(vacation);
                 this.finish();
             }
-
         }
-        if(item.getItemId()==R.id.vacationdelete) {
+
+        if (item.getItemId() == R.id.vacationdelete) {
             for (Vacation vac : repository.getmAllVacations()) {
                 if (vac.getVacationId() == vacationID) currentVacation = vac;
-
             }
-            numExcursions=0;
-            for(Excursion excursion: repository.getAllExcursions()){
-                if(excursion.getVacationId()==vacationID)++numExcursions;
+            numExcursions = 0;
+            for (Excursion excursion : repository.getAllExcursions()) {
+                if (excursion.getVacationId() == vacationID) ++numExcursions;
             }
-            if(numExcursions==0){
+            if (numExcursions == 0) {
                 repository.delete(currentVacation);
-                Toast.makeText(VacationDetails.this,currentVacation.getVacationName() + " was deleted", Toast.LENGTH_LONG).show();
+                Toast.makeText(VacationDetails.this, currentVacation.getVacationName() + " was deleted", Toast.LENGTH_LONG).show();
                 VacationDetails.this.finish();
-            }
-            else{
+            } else {
                 Toast.makeText(VacationDetails.this, "Can't delete a vacation with excursions.", Toast.LENGTH_LONG).show();
             }
         }
