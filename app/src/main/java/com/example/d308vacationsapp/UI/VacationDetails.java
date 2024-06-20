@@ -282,9 +282,105 @@ public class VacationDetails extends AppCompatActivity {
                 Toast.makeText(VacationDetails.this, "Can't delete a vacation with excursions.", Toast.LENGTH_LONG).show();
             }
         }
-        return true;
 
 
+        /*
+        if(item.getItemId()== R.id.vacationnotify) {
+            String startdateFromScreen = startDate.getText().toString();
+            String enddateFromScreen = endDate.getText().toString();
+
+            String myFormat = "MM/dd/yy"; //In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            Date myStartDate = null;
+            Date myEndDate = null;
+
+            try {
+                myStartDate = sdf.parse(startdateFromScreen);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            try {
+                myEndDate = sdf.parse(startdateFromScreen);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            try{
+                Long trigger = myStartDate.getTime();
+                Intent intent = new Intent(VacationDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Reminder: " + editName.getText().toString() + " is starting today!");
+                PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);}
+            catch (Exception e){
+
+            }
+
+            try{
+                Long trigger = myEndDate.getTime();
+                Intent intent = new Intent(VacationDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Reminder: " + editName.getText().toString() + " is ending today!");
+                PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);}
+            catch (Exception e){
+
+            }
+            return true;
+        }
+            */
+
+
+        if(item.getItemId() == R.id.vacationnotify) {
+            String startdateFromScreen = startDate.getText().toString();
+            String enddateFromScreen = endDate.getText().toString();
+
+            String myFormat = "MM/dd/yy"; // The date format
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            Date myStartDate = null;
+            Date myEndDate = null;
+
+            try {
+                myStartDate = sdf.parse(startdateFromScreen);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            try {
+                myEndDate = sdf.parse(enddateFromScreen);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (myStartDate != null) {
+                    Long trigger = myStartDate.getTime();
+                    Intent intent = new Intent(VacationDetails.this, MyReceiver.class);
+                    intent.putExtra("key", "Reminder: " + editName.getText().toString() + " is starting today!");
+                    PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (myEndDate != null) {
+                    Long trigger = myEndDate.getTime();
+                    Intent intent = new Intent(VacationDetails.this, MyReceiver.class);
+                    intent.putExtra("key", "Reminder: " + editName.getText().toString() + " is ending today!");
+                    PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 }
