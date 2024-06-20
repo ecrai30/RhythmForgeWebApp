@@ -1,6 +1,9 @@
 package com.example.d308vacationsapp.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -199,6 +202,7 @@ public class VacationDetails extends AppCompatActivity {
         }
 
         //Move the share if statement to VacationDetails.java; Try name, price,
+        /*
         if (item.getItemId() == R.id.share) {
             // Share all vacation details via Intent
             String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
@@ -232,7 +236,8 @@ public class VacationDetails extends AppCompatActivity {
             return true;
             */
 
-           /* // Share Intent - Include excursion name and note - TRY THIS TEST!!!!!!!
+
+           // Share Intent - Include excursion name and note - TRY THIS TEST!!!!!!!
             if (item.getItemId() == R.id.share) {
             StringBuilder vacationDetails = new StringBuilder();
             vacationDetails.append("Vacation Name: ").append(editName.getText().toString()).append("\n")
@@ -244,8 +249,8 @@ public class VacationDetails extends AppCompatActivity {
             List<Excursion> excursions = repository.getAllExcursions();
             for (Excursion excursion : excursions) {
                 if (excursion.getVacationId() == vacationID) {
-                    vacationDetails.append("Excursion Name: ").append(excursion.getExcursionName()).append("\n")
-                            .append("Excursion Note: ").append(excursion.getNote()).append("\n");
+                    vacationDetails.append("Excursion Name: ").append(excursion.getExcursionName()).append("\n");
+                            //.append("Excursion Note: ").append(excursion.getNote()).append("\n");
                 }
             }
 
@@ -258,9 +263,8 @@ public class VacationDetails extends AppCompatActivity {
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
             return true;
-        }*/
-
         }
+
 
         if (item.getItemId() == R.id.vacationdelete) {
             for (Vacation vac : repository.getmAllVacations()) {
@@ -279,5 +283,8 @@ public class VacationDetails extends AppCompatActivity {
             }
         }
         return true;
+
+
+
     }
 }
