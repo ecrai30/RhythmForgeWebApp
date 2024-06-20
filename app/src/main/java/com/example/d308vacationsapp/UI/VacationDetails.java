@@ -198,7 +198,7 @@ public class VacationDetails extends AppCompatActivity {
             }
         }
 
-        //Move the share if statement to VacationDetails.java; Try name, price, 
+        //Move the share if statement to VacationDetails.java; Try name, price,
         if (item.getItemId() == R.id.share) {
             // Share all vacation details via Intent
             String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
@@ -217,14 +217,14 @@ public class VacationDetails extends AppCompatActivity {
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
             return true;
-            
+
             /*
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, editNote.getText().toString());
             sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
             sendIntent.setType("text/plain");
-            
+
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
             return true;
