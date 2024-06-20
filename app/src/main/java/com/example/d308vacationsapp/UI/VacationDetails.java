@@ -218,6 +218,8 @@ public class VacationDetails extends AppCompatActivity {
             startActivity(shareIntent);
             return true;
 
+            
+
             /*
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
@@ -229,6 +231,35 @@ public class VacationDetails extends AppCompatActivity {
             startActivity(shareIntent);
             return true;
             */
+
+           /* // Share Intent - Include excursion name and note - TRY THIS TEST!!!!!!!
+            if (item.getItemId() == R.id.share) {
+            StringBuilder vacationDetails = new StringBuilder();
+            vacationDetails.append("Vacation Name: ").append(editName.getText().toString()).append("\n")
+                    .append("Vacation Price: $").append(editPrice.getText().toString()).append("\n")
+                    .append("Hotel: ").append(editHotel.getText().toString()).append("\n")
+                    .append("Start Date: ").append(startDate.getText().toString()).append("\n")
+                    .append("End Date: ").append(endDate.getText().toString()).append("\n");
+
+            List<Excursion> excursions = repository.getAllExcursions();
+            for (Excursion excursion : excursions) {
+                if (excursion.getVacationId() == vacationID) {
+                    vacationDetails.append("Excursion Name: ").append(excursion.getExcursionName()).append("\n")
+                            .append("Excursion Note: ").append(excursion.getNote()).append("\n");
+                }
+            }
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, vacationDetails.toString());
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Vacation Details");
+            sendIntent.setType("text/plain");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+            return true;
+        }*/
+
         }
 
         if (item.getItemId() == R.id.vacationdelete) {
