@@ -207,7 +207,7 @@ public class ExcursionDetails extends AppCompatActivity {
             */
         }
         // Uncomment this if it doesn't work!!!!
-        /*if(item.getItemId()== R.id.notify) {
+        if(item.getItemId()== R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
             String myFormat = "MM/dd/yy"; //In which you need put here
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -220,7 +220,7 @@ public class ExcursionDetails extends AppCompatActivity {
             try{
                 Long trigger = myDate.getTime();
                 Intent intent = new Intent(ExcursionDetails.this, MyReceiver.class);
-                intent.putExtra("key", "message I want to see");
+                intent.putExtra("key", "Reminder: " + editName.getText().toString() + " is today!");
                 PendingIntent sender = PendingIntent.getBroadcast(ExcursionDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);}
@@ -231,7 +231,7 @@ public class ExcursionDetails extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-            */
+         /*
         if (item.getItemId() == R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
@@ -254,8 +254,8 @@ public class ExcursionDetails extends AppCompatActivity {
             }
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+*/
+        //return super.onOptionsItemSelected(item);
 
         /*
         RecyclerView recyclerView=findViewById(R.id.vacationrecyclerview);
