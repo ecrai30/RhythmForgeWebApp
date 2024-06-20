@@ -145,6 +145,34 @@ public class ExcursionDetails extends AppCompatActivity {
 //                startActivity(intent);
 //                return true;
 
+        //e.  Include validation that the excursion date is during the associated vacation.
+        if (item.getItemId() == R.id.excursionsave) {
+            // HIGHLIGHTED CHANGE: Add validation before saving
+            if (validateExcursionDate()) {
+                Excursion excursion;
+                if (excursionID == -1) {
+                    if (repository.getAllExcursions().size() == 0)
+                        excursionID = 1;
+                    else
+                        excursionID = repository.getAllExcursions().get(repository.getAllExcursions().size() - 1).getExcursionId() + 1;
+                    excursion = new Excursion(excursionID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), vacID);
+
+                    repository.insert(excursion);
+                } else {
+                    excursion = new Excursion(excursionID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), vacID);
+                    repository.update(excursion);
+                }
+
+                return true;
+            } else {
+                Toast.makeText(this, "Excursion date must be within the vacation period.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+
+
+        /*
         if (item.getItemId() == R.id.excursionsave) {
             Excursion excursion;
             if (excursionID == -1) {
@@ -162,6 +190,8 @@ public class ExcursionDetails extends AppCompatActivity {
 
             return true;
         }
+        */
+
         //Delete Excursion
         if (item.getItemId() == R.id.deleteexcursion) {
             Excursion excursion;
@@ -174,38 +204,7 @@ public class ExcursionDetails extends AppCompatActivity {
             return true;
         }
 
-        //Move the share if statement to VacationDetails.java
-        if (item.getItemId() == R.id.share) {
-            // Share all vacation details via Intent
-            String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
-                    "Vacation Price: $" + editPrice.getText().toString() + "\n" +
-                    "Excursion Name: " + editName.getText().toString() + "\n" +
-                    //"Excursion Price: $" + editPrice.getText().toString() + "\n" +
-                    "Excursion Date: " + editDate.getText().toString() + "\n" +
-                    "Notes: " + editNote.getText().toString();
-
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, vacationDetails);
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Vacation Details");
-            sendIntent.setType("text/plain");
-
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
-            return true;
-            
-            /*
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, editNote.getText().toString());
-            sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
-            sendIntent.setType("text/plain");
-            
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
-            return true;
-            */
-        }
+        
         // Uncomment this if it doesn't work!!!!
         if(item.getItemId()== R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
@@ -231,6 +230,7 @@ public class ExcursionDetails extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
          /*
         if (item.getItemId() == R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
@@ -265,8 +265,44 @@ public class ExcursionDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         excursionAdapter.setExcursions(repository.getAllExcursions()); **/
 
-        // If it doesn't work remove the methods below!!!!!
 
+    }
+    // Testing Part B3e remove if doesn't work!!
+    private Date getVacationStartDate(Vacation vacation) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+        try {
+            return sdf.parse(vacation.getStartDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    private Date getVacationEndDate(Vacation vacation) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+        try {
+            return sdf.parse(vacation.getEndDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    // HIGHLIGHTED CHANGE: Validation method to ensure excursion date is within vacation period
+    private boolean validateExcursionDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+        Date excursionDate = null;
+        try {
+            excursionDate = sdf.parse(editDate.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        Vacation vacation = repository.getVacationById(vacID);
+        Date vacationStartDate = getVacationStartDate(vacation);
+        Date vacationEndDate = getVacationEndDate(vacation);
+
+        return excursionDate != null && vacationStartDate != null && vacationEndDate != null &&
+                !excursionDate.before(vacationStartDate) && !excursionDate.after(vacationEndDate);
     }
 }
