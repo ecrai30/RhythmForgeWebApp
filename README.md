@@ -66,7 +66,7 @@ To which android version the signed APK is deployed
 
 **Git Repository Link:**
 
-    https://gitlab.com/wgu-gitlab-environment/student-repos/ecrai30/d308-mobile-application-development-android/-/blob/working_branch/README.md?ref_type=heads 
+  https://gitlab.com/wgu-gitlab-environment/student-repos/ecrai30/d308-mobile-application-development-android/-/tree/working_branch?ref_type=heads 
 
 
 
