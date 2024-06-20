@@ -78,15 +78,6 @@ public class Vacation {
         this.hotel = hotel;
     }
     // Method to return start date as String Change if doesnt work!!!!!
-    public String getFormattedStartDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-        return sdf.format(startDate);
-    }
 
-    // Method to return end date as String
-    public String getFormattedEndDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-        return sdf.format(endDate);
-    }
 
 }

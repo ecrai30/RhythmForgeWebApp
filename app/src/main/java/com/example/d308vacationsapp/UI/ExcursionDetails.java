@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -135,15 +136,16 @@ public class ExcursionDetails extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId()== android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             this.finish();
-            return true;}
+            return true;
+        }
         // return true;
 //                Intent intent=new Intent(PartDetails.this,MainActivity.class);
 //                startActivity(intent);
 //                return true;
 
-        if (item.getItemId()== R.id.excursionsave){
+        if (item.getItemId() == R.id.excursionsave) {
             Excursion excursion;
             if (excursionID == -1) {
                 if (repository.getAllExcursions().size() == 0)
@@ -173,15 +175,14 @@ public class ExcursionDetails extends AppCompatActivity {
         }
 
 
-
-        if (item.getItemId()== R.id.share) {
+        if (item.getItemId() == R.id.share) {
             // Share all vacation details via Intent
             String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
-                                    "Vacation Price: $" + editPrice.getText().toString() + "\n" +
-                                    "Excursion Name: " + editName.getText().toString() + "\n" +
-                                    "Excursion Price: $" + editPrice.getText().toString() + "\n" +
-                                    "Excursion Date: " + editDate.getText().toString() + "\n" +
-                                    "Notes: " + editNote.getText().toString();
+                    "Vacation Price: $" + editPrice.getText().toString() + "\n" +
+                    "Excursion Name: " + editName.getText().toString() + "\n" +
+                    "Excursion Price: $" + editPrice.getText().toString() + "\n" +
+                    "Excursion Date: " + editDate.getText().toString() + "\n" +
+                    "Notes: " + editNote.getText().toString();
 
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
@@ -231,7 +232,7 @@ public class ExcursionDetails extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
             */
-           if (item.getItemId() == R.id.notify) {
+        if (item.getItemId() == R.id.notify) {
             String dateFromScreen = editDate.getText().toString();
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
             Date myDate = null;
@@ -264,44 +265,8 @@ public class ExcursionDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         excursionAdapter.setExcursions(repository.getAllExcursions()); **/
 
-    // If it doesn't work remove the methods below!!!!!
-    private Date getVacationStartDate(Vacation vacation) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-        try {
-            return sdf.parse(vacation.getStartDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+        // If it doesn't work remove the methods below!!!!!
 
-    private Date getVacationEndDate(Vacation vacation) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-        try {
-            return sdf.parse(vacation.getEndDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private void setNotification() {
-        String dateFromScreen = editDate.getText().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-        Date myDate = null;
-        try {
-            myDate = sdf.parse(dateFromScreen);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (myDate != null) {
-            Long trigger = myDate.getTime();
-            Intent intent = new Intent(ExcursionDetails.this, MyReceiver.class);
-            intent.putExtra("key", "Excursion: " + editName.getText().toString());
-            PendingIntent sender = PendingIntent.getBroadcast(ExcursionDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
-        }
 
     }
 }
