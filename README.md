@@ -1,5 +1,8 @@
 
 Title and purpose of the application
+
+# **VacayVibe**
+
 VacayVibe is a vacation scheduler app that allows a user to maintain vacations. The app includes the following features: adding, deleting, and updating vacation details(vacation name, hotel, start and end date,excursions), adding, delete, and update excursion details (excursion name and date), sharing feature that allows user to share via email or text, alerts and notifications for start and end of vacation. 
 
 VacayVibe is a comprehensive vacation scheduler app designed to help users manage their travel plans effortlessly. Users can:
