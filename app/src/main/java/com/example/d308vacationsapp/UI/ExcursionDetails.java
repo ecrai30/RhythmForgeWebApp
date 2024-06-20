@@ -174,13 +174,13 @@ public class ExcursionDetails extends AppCompatActivity {
             return true;
         }
 
-
+        //Move the share if statement to VacationDetails.java
         if (item.getItemId() == R.id.share) {
             // Share all vacation details via Intent
             String vacationDetails = "Vacation Name: " + editName.getText().toString() + "\n" +
                     "Vacation Price: $" + editPrice.getText().toString() + "\n" +
                     "Excursion Name: " + editName.getText().toString() + "\n" +
-                    "Excursion Price: $" + editPrice.getText().toString() + "\n" +
+                    //"Excursion Price: $" + editPrice.getText().toString() + "\n" +
                     "Excursion Date: " + editDate.getText().toString() + "\n" +
                     "Notes: " + editNote.getText().toString();
 
