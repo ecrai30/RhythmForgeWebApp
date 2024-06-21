@@ -11,13 +11,12 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteX="372dp"
-        app:srcCompat="@android:drawable/ic_input_add"
-       />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vacationrecyclerview"
