@@ -62,6 +62,7 @@ Directions for how to operate the application and reach all the rubric aspects
 
 
 To which android version the signed APK is deployed
+  "minSdkVersionForDexing": 26
 
 
 **Git Repository Link:**
