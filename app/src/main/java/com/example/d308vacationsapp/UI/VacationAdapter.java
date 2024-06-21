@@ -2,6 +2,7 @@ package com.example.d308vacationsapp.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,8 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             Vacation current=mVacations.get(position);
             String name=current.getVacationName();
             holder.vacationItemView.setText(name);
+            holder.vacationItemView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // Set text size to 20sp
+
         }
         else{
             holder.vacationItemView.setText("No vacation name");
