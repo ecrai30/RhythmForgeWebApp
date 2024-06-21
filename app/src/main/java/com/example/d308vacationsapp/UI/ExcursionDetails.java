@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +60,7 @@ public class ExcursionDetails extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         editName = findViewById(R.id.excursionName);
         editName.setText(name);
-        price = getIntent().getDoubleExtra("price", -1.0);
+        price = getIntent().getDoubleExtra("price", 0.0);
         editPrice = findViewById(R.id.excursionPrice);
         editPrice.setText(Double.toString(price));
         excursionID = getIntent().getIntExtra("id", -1);
@@ -109,7 +110,7 @@ public class ExcursionDetails extends AppCompatActivity {
                 Date date;
                 //get value from other screen,but I'm going to hard code it right now
                 String info=editDate.getText().toString();
-                if(info.equals(""))info="06/13/24";
+                if(info.equals(""))info="06/20/24";
                 try{
                     myCalendarStart.setTime(sdf.parse(info));
                 } catch (ParseException e) {
@@ -162,7 +163,6 @@ public class ExcursionDetails extends AppCompatActivity {
                     excursion = new Excursion(excursionID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), vacID);
                     repository.update(excursion);
                 }
-
                 return true;
             } else {
                 Toast.makeText(this, "Excursion date must be within the vacation period.", Toast.LENGTH_SHORT).show();
@@ -289,12 +289,17 @@ public class ExcursionDetails extends AppCompatActivity {
     }
     // HIGHLIGHTED CHANGE: Validation method to ensure excursion date is within vacation period
     private boolean validateExcursionDate() {
+        String DATE_FORMAT = "MM/dd/yy"; // Ensure DATE_FORMAT is defined
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+
         Date excursionDate = null;
         try {
-            excursionDate = sdf.parse(editDate.getText().toString());
+            String excursionDateString = editDate.getText().toString();
+            excursionDate = sdf.parse(excursionDateString);
+            Log.d("Debug", "Parsed Excursion Date: " + excursionDateString + " -> " + excursionDate);
         } catch (ParseException e) {
             e.printStackTrace();
+            Log.d("Debug", "Failed to parse excursion date");
             return false;
         }
 
@@ -302,7 +307,18 @@ public class ExcursionDetails extends AppCompatActivity {
         Date vacationStartDate = getVacationStartDate(vacation);
         Date vacationEndDate = getVacationEndDate(vacation);
 
-        return excursionDate != null && vacationStartDate != null && vacationEndDate != null &&
-                !excursionDate.before(vacationStartDate) && !excursionDate.after(vacationEndDate);
+        Log.d("Debug", "Vacation Start Date: " + vacationStartDate);
+        Log.d("Debug", "Vacation End Date: " + vacationEndDate);
+
+        if (excursionDate == null || vacationStartDate == null || vacationEndDate == null) {
+            Log.d("Debug", "One or more dates are null");
+            return false;
+        }
+
+        // Check if the excursion date is within the vacation period
+        boolean isWithinRange = !excursionDate.before(vacationStartDate) && !excursionDate.after(vacationEndDate);
+        Log.d("Debug", "Excursion Date is within range: " + isWithinRange);
+
+        return isWithinRange;
     }
 }
