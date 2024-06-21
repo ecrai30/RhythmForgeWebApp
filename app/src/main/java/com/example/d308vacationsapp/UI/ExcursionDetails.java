@@ -29,6 +29,8 @@ import com.example.d308vacationsapp.R;
 import com.example.d308vacationsapp.database.Repository;
 import com.example.d308vacationsapp.entities.Excursion;
 import com.example.d308vacationsapp.entities.Vacation;
+import com.example.d308vacationsapp.UI.VacationList;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -162,10 +164,18 @@ public class ExcursionDetails extends AppCompatActivity {
                 } else {
                     excursion = new Excursion(excursionID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()), vacID);
                     repository.update(excursion);
+                    this.finish();
                 }
+                // Navigate back to VacationListActivity
+                Intent intent = new Intent(this, VacationList.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Clear back stack
+                startActivity(intent);
+                finish();
+
                 return true;
             } else {
                 Toast.makeText(this, "Excursion date must be within the vacation period.", Toast.LENGTH_SHORT).show();
+
             }
         }
 
