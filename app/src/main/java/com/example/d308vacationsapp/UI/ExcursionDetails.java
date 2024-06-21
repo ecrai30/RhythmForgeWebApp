@@ -112,7 +112,9 @@ public class ExcursionDetails extends AppCompatActivity {
                 Date date;
                 //get value from other screen,but I'm going to hard code it right now
                 String info=editDate.getText().toString();
-                if(info.equals(""))info="06/20/24";
+                if (editDate.getText().toString().isEmpty()) {
+                    myCalendarStart.setTimeInMillis(System.currentTimeMillis());
+                }
                 try{
                     myCalendarStart.setTime(sdf.parse(info));
                 } catch (ParseException e) {
