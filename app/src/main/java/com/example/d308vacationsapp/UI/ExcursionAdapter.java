@@ -2,6 +2,7 @@ package com.example.d308vacationsapp.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,9 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
             int vacID = current.getVacationId();
             holder.excursionItemView.setText(name);
             holder.excursionItemView2.setText(Integer.toString(vacID));
+            holder.excursionItemView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // Set text size to 20sp
+            holder.excursionItemView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // Set text size to 20sp
+
 
         }
         else{
