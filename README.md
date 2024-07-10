@@ -58,9 +58,6 @@ Android version the signed APK is deployed:
   "minSdkVersionForDexing": 26
 
 
-**Git Repository Link:**
-
-  https://gitlab.com/wgu-gitlab-environment/student-repos/ecrai30/d308-mobile-application-development-android/-/tree/working_branch?ref_type=heads 
 
 
 
